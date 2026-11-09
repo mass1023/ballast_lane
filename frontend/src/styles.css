@@ -1,0 +1,49 @@
+@import 'tailwindcss';
+
+@layer components {
+  body {
+    @apply bg-gray-50 text-gray-900 antialiased;
+  }
+
+  .label {
+    @apply mb-1 block text-sm font-medium text-gray-700;
+  }
+
+  .input {
+    @apply block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm shadow-xs placeholder:text-gray-400 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/30 focus:outline-none;
+  }
+
+  .input.ng-invalid.ng-touched {
+    @apply border-red-400 focus:border-red-500 focus:ring-red-500/30;
+  }
+
+  .field-error {
+    @apply mt-1 text-xs text-red-600;
+  }
+
+  .btn-primary,
+  .btn-secondary,
+  .btn-danger {
+    @apply inline-flex items-center justify-center rounded-md px-3.5 py-2 text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .btn-primary {
+    @apply bg-indigo-600 text-white hover:bg-indigo-500 focus-visible:ring-indigo-500;
+  }
+
+  .btn-secondary {
+    @apply border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus-visible:ring-indigo-500;
+  }
+
+  .btn-danger {
+    @apply bg-red-600 text-white hover:bg-red-500 focus-visible:ring-red-500;
+  }
+
+  .btn-link {
+    @apply text-sm font-medium text-indigo-600 hover:underline;
+  }
+
+  .badge {
+    @apply inline-flex rounded-full bg-gray-100 px-2 py-0.5 text-xs font-medium text-gray-700;
+  }
+}
