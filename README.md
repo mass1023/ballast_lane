@@ -2,6 +2,12 @@
 
 A small full-stack app for a record label's catalog: an ASP.NET Core Web API with hand-written SQL on PostgreSQL, JWT auth, and an Angular + Tailwind frontend.
 
+This repo has both parts of the exercise:
+
+- **[PRESENTATION.md](PRESENTATION.md):** my thought process during the exercise. Start here.
+- **Full-stack app:** `backend/` and `frontend/`, described below and in [ARCHITECTURE.md](ARCHITECTURE.md).
+- **GenAI exercise:** [`GenAI/`](GenAI/README.md), a task-management API generated with Claude Code, with the prompt, validation and corrections.
+
 ## User story
 
 > As the label's catalog admin, I want to log in and add, edit and remove releases (title, artist, release year, format) so that our catalog stays up to date.
