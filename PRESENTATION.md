@@ -1,6 +1,6 @@
 # Presentation
 
-Everything is in this repo. The full-stack app is in `backend/` and `frontend/` (see the [README](README.md) and [ARCHITECTURE.md](ARCHITECTURE.md)) and the GenAI exercise is in [`GenAI/`](GenAI/README.md).
+Everything is in this repo. The full-stack app is in `backend/` and `frontend/` (see the [README](README.md) and [ARCHITECTURE.md](ARCHITECTURE.md)) and the GenAI exercise is answered in [GENAI.md](GENAI.md) with the code in `GenAI/`.
 
 I used Claude Code for both parts. Here I try to explain how I went through the exercise, the decisions I made and the things I had to correct along the way.
 
@@ -42,7 +42,7 @@ The unit tests check every rule and its limits. The repository and endpoint test
 
 ## GenAI exercise
 
-The details are in [GenAI/README.md](GenAI/README.md).
+The details are in [GENAI.md](GENAI.md).
 
 In the prompt I set the stack and the scope. The AI asked me two things: if `responsable_id` was required, with a 400 when the user doesn't exist, and if `due_date` was required. The rest it decided by itself and I reviewed it.
 

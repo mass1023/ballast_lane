@@ -6,7 +6,7 @@ This repo has both parts of the exercise:
 
 - **[PRESENTATION.md](PRESENTATION.md):** my thought process during the exercise. Start here.
 - **Full-stack app:** `backend/` and `frontend/`, described below and in [ARCHITECTURE.md](ARCHITECTURE.md).
-- **GenAI exercise:** [`GenAI/`](GenAI/README.md), a task-management API generated with Claude Code, with the prompt, validation and corrections.
+- **GenAI exercise:** answered in [GENAI.md](GENAI.md), code in `GenAI/`. A task-management API generated with Claude Code, with the prompt, validation and corrections.
 
 ## User story
 
