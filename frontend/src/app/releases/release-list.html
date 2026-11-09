@@ -1,0 +1,101 @@
+<div class="flex flex-wrap items-center justify-between gap-3">
+  <h1 class="text-xl font-semibold text-gray-900">Releases</h1>
+  <a routerLink="/releases/new" class="btn-primary">New release</a>
+</div>
+
+<input
+  type="search"
+  [formControl]="search"
+  placeholder="Search by title or artist…"
+  aria-label="Search releases"
+  class="input mt-4"
+/>
+
+<app-error-box class="mt-4 block" [errors]="deleteError()" />
+
+<section class="mt-4 rounded-lg border border-gray-200 bg-white" [attr.aria-busy]="loading()">
+  @if (error().length > 0) {
+    <app-error-box class="block p-4" [errors]="error()" />
+  } @else if (!releases()) {
+    <p class="p-8 text-center text-sm text-gray-500">Loading releases…</p>
+  } @else if (releases()!.items.length === 0) {
+    <div class="p-8 text-center text-sm text-gray-500">
+      @if (query().search) {
+        <p>No releases match “{{ query().search }}”.</p>
+        <button type="button" class="mt-2 font-medium text-indigo-600 hover:underline" (click)="clearSearch()">
+          Clear search
+        </button>
+      } @else {
+        <p>The catalog is empty. Add the first release.</p>
+      }
+    </div>
+  } @else {
+    <div [class.opacity-60]="loading()">
+      <table class="hidden w-full text-left text-sm md:table">
+        <thead class="border-b border-gray-200 text-xs uppercase tracking-wide text-gray-500">
+          <tr>
+            <th class="px-4 py-3 font-medium">Title</th>
+            <th class="px-4 py-3 font-medium">Artist</th>
+            <th class="px-4 py-3 font-medium">Year</th>
+            <th class="px-4 py-3 font-medium">Format</th>
+            <th class="px-4 py-3"><span class="sr-only">Actions</span></th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-100">
+          @for (release of releases()!.items; track release.id) {
+            <tr class="hover:bg-gray-50">
+              <td class="px-4 py-3 font-medium text-gray-900">{{ release.title }}</td>
+              <td class="px-4 py-3 text-gray-700">{{ release.artist }}</td>
+              <td class="px-4 py-3 text-gray-700">{{ release.releaseYear }}</td>
+              <td class="px-4 py-3"><span class="badge">{{ release.format }}</span></td>
+              <td class="px-4 py-3 text-right whitespace-nowrap">
+                <a [routerLink]="['/releases', release.id, 'edit']" class="btn-link">Edit</a>
+                <button type="button" class="btn-link ml-3 text-red-600" (click)="askDelete(release)">
+                  Delete
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+
+      <ul class="divide-y divide-gray-100 md:hidden">
+        @for (release of releases()!.items; track release.id) {
+          <li class="flex items-center justify-between gap-3 px-4 py-3">
+            <div class="min-w-0">
+              <p class="truncate font-medium text-gray-900">{{ release.title }}</p>
+              <p class="truncate text-sm text-gray-600">
+                {{ release.artist }} · {{ release.releaseYear }} · {{ release.format }}
+              </p>
+            </div>
+            <div class="flex shrink-0 gap-3">
+              <a [routerLink]="['/releases', release.id, 'edit']" class="btn-link">Edit</a>
+              <button type="button" class="btn-link text-red-600" (click)="askDelete(release)">
+                Delete
+              </button>
+            </div>
+          </li>
+        }
+      </ul>
+    </div>
+
+    <div class="border-t border-gray-200 px-4 py-3">
+      <app-pagination
+        [page]="query().page"
+        [pageSize]="query().pageSize"
+        [totalCount]="releases()!.totalCount"
+        (pageChange)="changePage($event)"
+        (pageSizeChange)="changePageSize($event)"
+      />
+    </div>
+  }
+</section>
+
+<app-confirm-dialog
+  [open]="toDelete() !== null"
+  [busy]="deleting()"
+  title="Delete release?"
+  [message]="'“' + (toDelete()?.title ?? '') + '” by ' + (toDelete()?.artist ?? '') + ' will be removed from the catalog.'"
+  (confirm)="confirmDelete()"
+  (cancel)="cancelDelete()"
+/>

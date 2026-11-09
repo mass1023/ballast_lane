@@ -1,0 +1,71 @@
+<div class="mx-auto max-w-xl">
+  <h1 class="text-xl font-semibold text-gray-900">{{ id() ? 'Edit release' : 'New release' }}</h1>
+
+  <app-error-box class="mt-4 block" [errors]="errors()" />
+
+  @if (loading()) {
+    <p class="mt-6 text-sm text-gray-500">Loading release…</p>
+  } @else if (loadFailed()) {
+    <a routerLink="/releases" class="btn-link mt-4 inline-block">Back to releases</a>
+  } @else {
+    <form
+      [formGroup]="form"
+      (ngSubmit)="save()"
+      novalidate
+      class="mt-6 space-y-5 rounded-lg border border-gray-200 bg-white p-6"
+    >
+      <div>
+        <label for="title" class="label">Title</label>
+        <input id="title" formControlName="title" class="input" autocomplete="off" />
+        @if (fieldError(form.controls.title, 'Title'); as message) {
+          <p class="field-error">{{ message }}</p>
+        }
+      </div>
+
+      <div>
+        <label for="artist" class="label">Artist</label>
+        <input id="artist" formControlName="artist" class="input" autocomplete="off" />
+        @if (fieldError(form.controls.artist, 'Artist'); as message) {
+          <p class="field-error">{{ message }}</p>
+        }
+      </div>
+
+      <div class="grid gap-5 sm:grid-cols-2">
+        <div>
+          <label for="releaseYear" class="label">Release year</label>
+          <input
+            id="releaseYear"
+            type="number"
+            formControlName="releaseYear"
+            class="input"
+            [min]="minYear"
+            [max]="maxYear"
+            [placeholder]="minYear + '–' + maxYear"
+          />
+          @if (fieldError(form.controls.releaseYear, 'Release year'); as message) {
+            <p class="field-error">{{ message }}</p>
+          }
+        </div>
+
+        <div>
+          <label for="format" class="label">Format</label>
+          <select id="format" formControlName="format" class="input">
+            @for (format of formats; track format) {
+              <option [value]="format">{{ format }}</option>
+            }
+          </select>
+          @if (fieldError(form.controls.format, 'Format'); as message) {
+            <p class="field-error">{{ message }}</p>
+          }
+        </div>
+      </div>
+
+      <div class="flex justify-end gap-2 border-t border-gray-100 pt-5">
+        <a routerLink="/releases" class="btn-secondary">Cancel</a>
+        <button type="submit" class="btn-primary" [disabled]="saving()">
+          {{ saving() ? 'Saving…' : 'Save' }}
+        </button>
+      </div>
+    </form>
+  }
+</div>
